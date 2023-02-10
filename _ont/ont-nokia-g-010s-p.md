@@ -292,7 +292,7 @@ The following commands are used to flash a new rootfs to image1 and then boot to
 
 If you wish to change the firmware via serial, we recommend using the web app: [Web Serial Flash](/ont-nokia-g-010s-p-ymodem)
 
-# TX Fault / Serial
+## TX Fault / Serial
 
 The stick stays in a perpetual "TX Fault" state since the same SFP pin is used for both serial and TX Fault signaling, if that causes you issues (normally it shouldn't) you can issue the commands below to disable it. Note that it will disable both the TX Fault signal and Serial on the stick after boot.
 
