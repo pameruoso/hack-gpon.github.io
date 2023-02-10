@@ -324,8 +324,6 @@ FALCON => saveenv
 FALCON => sf probe 0 && sf erase C0000 740000 && sf write 80800000 C0000 740000 && reset
 ```
 
-{% include alert.html content="If you need to flash to image 2, you must use the following command `FALCON => sf probe 0 && sf erase 800000 800000 && sf write 80800000 800000 800000 && reset`" alert="Warning" icon="svg-warning" color="red" %}
-
 ## Cloning of mtd1 (image 0) into mtd5 (image 1)
 
 {% include alert.html content="Image 0 can be flashed to image 1, while image 1 cannot be flashed to image 0 because it has larger rootfs_data" alert="Warning" icon="svg-warning" color="yellow" %}
