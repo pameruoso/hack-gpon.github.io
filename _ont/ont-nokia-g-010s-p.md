@@ -171,33 +171,6 @@ uci commit
 
 {% include alert.html content="There is also the `onu gtc_password_set` command to set the ploam password but it does not seem to work." alert="Info"  icon="svg-info" color="blue" %}
 
-
-## Getting/Setting Speed LAN Mode
-
-The known speed values are as follows:
-
-| Value | Speed    |
-| ----- | -------- |
-| 4     | 1 Gbps   |
-| 5     | 2.5 Gbps |
-
-To set the (H)SGMII Mode:
-
-```sh
-fw_setenv sgmii_mode 5
-```
-
-To remove the value (back to default):
-```sh
-fw_setenv sgmii_mode
-```
-
-To get the (H)SGMII Mode:
-
-```sh
-onu lanpsg 0
-```
-
 The `link_status` value shows the speed.
 
 ##  Disabling Dying Gasp
@@ -308,10 +281,36 @@ FALCON => setenv asc0 0
 FALCON => saveenv
 ```
 
+## Getting/Setting Speed LAN Mode
+
+| Velue | Speed                              |
+| ----- | ---------------------------------- |
+| 4     | 1 Gbps / SGMII                     |
+| 5     | 2.5 Gbps / HSGMII with auto-neg on |
+
+To enable the 2.5 Gbps / HSGMII with auto-neg on:
+
+```sh
+fw_setenv sgmii_mode 5
+```
+
+To remove the value (back to default):
+```sh
+fw_setenv sgmii_mode
+```
+
+To get the (H)SGMII Mode:
+
+```sh
+onu lanpsg 0
+```
+The `link_status` variable tells the current speed
+
 ## Querying a particular OMCI ME
 ```sh
-omci_pipe.sh meg MIB_IDX 0
+omci_pipe.sh meg MIB_IDX ME_IN
 ```
+Where `MIB_IDX` is the MIB ID and the `ME_IN` is the ME instance number
 
 # EEPROM (I2C slave simulated EEPROM)
 
