@@ -308,6 +308,83 @@ FALCON => setenv asc0 0
 FALCON => saveenv
 ```
 
+# EEPROM (I2C slave simulated EEPROM)
+
+The Nokia G-010S-P does not have a physical EEPROM, the Falcon SOC emulates an EEPROM by exposing it on the I2C interface as required by the SFF-8472 specification.
+
+On the I2C interface there will be two memories of 256 bytes each at the addresses `1010000X (A0h)` and `1010001X (A2h)`.
+
+The Zyxel PMG3000-D20B stores the content of the emulated EEPROM1 (A2h) in Boot env variable `sfp_a2_info` to restore it after a reboot.
+
+{% include alert.html content="The contents of EEPROM0 (A0h) are not stored anywhere and is regenerated at each boot" alert="Info" icon="svg-info" color="blue" %}
+
+## EEPROM1 layout
+
+| address | size | name                              | default value                             | description                                                 |
+| ------- | ---- | --------------------------------- | ----------------------------------------- | ----------------------------------------------------------- |
+|         |      | **DIAGNOSTIC AND CONTROL FIELDS** |                                           |                                                             |
+| 0-1     | 2    | Temp High Alarm                   | `0x64 0x00` (100℃)                        |                                                             |
+| 2-3     | 2    | Temp Low Alarm                    | `0xCE 0x00` (-50℃)                        |                                                             |
+| 4-5     | 2    | Temp High Warning                 | `0x5F 0x00` (95℃)                         |                                                             |
+| 6-7     | 2    | Temp Low Warning                  | `0xD8 0x00` (-40℃)                        |                                                             |
+| 8-9     | 2    | Voltage High Alarm                | `0x8C 0xA0` (3.6V)                        |                                                             |
+| 10-11   | 2    | Voltage Low Alarm                 | `0x75 0x30` (3V)                          |                                                             |
+| 12-13   | 2    | Voltage High Warning              | `0x88 0xB8` (3.5V)                        |                                                             |
+| 14-15   | 2    | Voltage Low Warning               | `0x79 0x18` (3.1V)                        |                                                             |
+| 16-17   | 2    | Bias High Alarm                   | `0xAF 0xC8` (4.5mA)                       |                                                             |
+| 18-19   | 2    | Bias Low Alarm                    | `0x00 0x00` (0mA)                         |                                                             |
+| 20-21   | 2    | Bias High Warning                 | `0x88 0xB8` (3.5mA)                       |                                                             |
+| 22-23   | 2    | Bias Low Warning                  | `0x00 0x00` (0mA)                         |                                                             |
+| 24-25   | 2    | TX Power High Alarm               | `0x7B 0x86` (5dBm)                        | Value expressed in watts subunits                           |
+| 26-27   | 2    | TX Power Low Alarm                | `0x22 0xD0` (-0dBm)                       | Value expressed in watts subunits                           |
+| 28-29   | 2    | TX Power High Warning             | `0x6E 0x17` (4dBm)                        | Value expressed in watts subunits                           |
+| 30-31   | 2    | TX Power Low Warning              | `0x27 0x10` (0dBm)                        | Value expressed in watts subunits                           |
+| 32-33   | 2    | RX Power High Alarm               | `0x07 0xCB` (-7dBm)                       | Value expressed in watts subunits                           |
+| 34-35   | 2    | RX Power Low Alarm                | `0x00 0x0F` (-28dBm)                      | Value expressed in watts subunits                           |
+| 36-37   | 2    | RX Power High Warning             | `0x06 0x30` (-8dBm)                       | Value expressed in watts subunits                           |
+| 38-39   | 2    | RX Power Low Warning              | `0x00 0x14` (-27dBm)                      | Value expressed in watts subunits                           |
+| 40-45   | 6    | MAC address                       | Unique in each SFP                        | Contains the mac address of the SFP, it could also be empty |
+| 46-55   | 10   | Reserved                          | `0x00 0x00 0x00...`                       | Reserved                                                    |
+| 56-59   | 4    | RX_PWR(4) Calibration             | `0x00 0x00 0x00 0x00`                     | 4th order RSSI calibration coefficient                      |
+| 60-63   | 4    | RX_PWR(3) Calibration             | `0x00 0x00 0x00 0x00`                     | 3rd order RSSI calibration coefficient                      |
+| 64-67   | 4    | RX_PWR(2) Calibration             | `0x00 0x00 0x00 0x00`                     | 2nd order RSSI calibration coefficient                      |
+| 68-71   | 4    | RX_PWR(1) Calibration             | `0x3F 0x80 0x00 0x00`                     | 1st order RSSI calibration coefficient                      |
+| 72-75   | 4    | RX_PWR(0) Calibration             | `0x00 0x00 0x00 0x00`                     | 0th order RSSI calibration coefficient                      |
+| 76-77   | 2    | TX_I(Slope) Calibration           | `0x01 0x00`                               | Slope for Bias calibration                                  |
+| 78-79   | 2    | TX_I(Offset) Calibration          | `0x00 0x00`                               | Offset for Bias calibration                                 |
+| 80-81   | 2    | TX_PWR(Slope) Calibration         | `0x01 0x00`                               | Slope for TX Power calibration                              |
+| 82-83   | 2    | TX_PWR(Offset) Calibration        | `0x00 0x00`                               | Offset for TX Power calibration                             |
+| 84-85   | 2    | T(Slope) Calibration              | `0x01 0x00`                               | Slope for Temperature calibration                           |
+| 86-87   | 2    | T(Offset) Calibration             | `0x00 0x00`                               | Offset for Temperature calibration, in units of 256ths °C   |
+| 88-89   | 2    | V(Slope) Calibration              | `0x01 0x00`                               | Slope for VCC calibration                                   |
+| 90-91   | 2    | V(Offset) Calibration             | `0x00 0x00`                               | Offset for VCC calibration                                  |
+| 92-94   | 3    | Reserved                          | `0x00 0x00 0x00`                          | Reserved                                                    |
+| 95      | 1    | CC_DMI                            |                                           | Check code for Base Diagnostic Fields (addresses 0 to 94)   |
+| 96      | 1    | Temperature MSB                   |                                           | Internally measured module temperature                      |
+| 97      | 1    | Temperature LSB                   |                                           |                                                             |
+| 98      | 1    | Vcc MSB                           |                                           | Internally measured supply voltage in transceiver           |
+| 99      | 1    | Vcc LSB                           |                                           |                                                             |
+| 100     | 1    | TX Bias MSB                       |                                           | Internally measured TX Bias Current                         |
+| 101     | 1    | TX Bias LSB                       |                                           |                                                             |
+| 102     | 1    | TX Power MSB                      |                                           | Measured TX output power                                    |
+| 103     | 1    | TX Power LSB                      |                                           |                                                             |
+| 104     | 1    | RX Power MSB                      |                                           | Measured RX input power                                     |
+| 105     | 1    | RX Power LSB                      |                                           |                                                             |
+| 106-109 | 4    | Optional Diagnostics              | `0xFF 0xFF 0xFF 0xFF` (No support)        | Monitor Data for Optional Laser temperature and TEC current |
+| 110     | 1    | Status/Control                    | `0x03`                                    | Optional Status and Control Bits                            |
+| 111     | 1    | Reserved                          | `0x00`                                    | Reserved                                                    |
+| 112-113 | 2    | Alarm Flags                       | Supported                                 | Diagnostic Alarm Flag Status Bits                           |
+| 114     | 1    | Tx Input EQ control               | `0xFF` (No support)                       | Tx Input equalization level control                         |
+| 115     | 1    | Rx Out Emphasis control           | `0xFF` (No support)                       | Rx Output emphasis level control                            |
+| 116-117 | 2    | Warning Flags                     | Supported                                 | Diagnostic Warning Flag Status Bits                         |
+| 118-119 | 2    | Ext Status/Control                | `0x00 0x00`                               | Extended module control and status bytes                    |
+|         |      | **GENERAL USE FIELDS**            |                                           |                                                             |
+| 120-126 | 7    | Vendor Specific                   | `0x70 0x00 0x00 0x00 0x00 0x00 0x20`      | Vendor specific memory addresses                            |
+| 127     | 1    | Table Select                      | `0x00`                                    | Optional Page Select                                        |
+|         |      | **USER WRITABLE EEPROM**          |                                           |                                                             |
+| 128-247 | 120  | Reserved                          | `0x00 0x00 0x00...`                       | Reserved                                                    |
+| 248-255 | 8    | Vendor Control                    | `0x00 0x00 0x00 0x00 0x00 0x41 0x41 0x31` | Vendor specific control functions                           |
+
 # Miscellaneous Links
 
 - [alcatel_lucent-lantiq_falcon](https://github.com/minhng99/alcatel_lucent-lantiq_falcon)
