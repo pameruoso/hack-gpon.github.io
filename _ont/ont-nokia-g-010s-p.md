@@ -323,18 +323,18 @@ The Zyxel PMG3000-D20B stores the content of the emulated EEPROM1 (A2h) in Boot 
 | address | size | name                              | default value                             | description                                                 |
 | ------- | ---- | --------------------------------- | ----------------------------------------- | ----------------------------------------------------------- |
 |         |      | **DIAGNOSTIC AND CONTROL FIELDS** |                                           |                                                             |
-| 0-1     | 2    | Temp High Alarm                   | `0x64 0x00` (100℃)                        |                                                             |
-| 2-3     | 2    | Temp Low Alarm                    | `0xCE 0x00` (-50℃)                        |                                                             |
-| 4-5     | 2    | Temp High Warning                 | `0x5F 0x00` (95℃)                         |                                                             |
-| 6-7     | 2    | Temp Low Warning                  | `0xD8 0x00` (-40℃)                        |                                                             |
-| 8-9     | 2    | Voltage High Alarm                | `0x8C 0xA0` (3.6V)                        |                                                             |
-| 10-11   | 2    | Voltage Low Alarm                 | `0x75 0x30` (3V)                          |                                                             |
-| 12-13   | 2    | Voltage High Warning              | `0x88 0xB8` (3.5V)                        |                                                             |
-| 14-15   | 2    | Voltage Low Warning               | `0x79 0x18` (3.1V)                        |                                                             |
-| 16-17   | 2    | Bias High Alarm                   | `0xAF 0xC8` (4.5mA)                       |                                                             |
-| 18-19   | 2    | Bias Low Alarm                    | `0x00 0x00` (0mA)                         |                                                             |
-| 20-21   | 2    | Bias High Warning                 | `0x88 0xB8` (3.5mA)                       |                                                             |
-| 22-23   | 2    | Bias Low Warning                  | `0x00 0x00` (0mA)                         |                                                             |
+| 0-1     | 2    | Temp High Alarm                   | `0x64 0x00` (100℃)                        | Value expressed in two's complement                         |
+| 2-3     | 2    | Temp Low Alarm                    | `0xCE 0x00` (-50℃)                        | Value expressed in two's complement                         |
+| 4-5     | 2    | Temp High Warning                 | `0x5F 0x00` (95℃)                         | Value expressed in two's complement                         |
+| 6-7     | 2    | Temp Low Warning                  | `0xD8 0x00` (-40℃)                        | Value expressed in two's complement                         |
+| 8-9     | 2    | Voltage High Alarm                | `0x8C 0xA0` (3.6V)                        | Value expressed in volt subunits                            |
+| 10-11   | 2    | Voltage Low Alarm                 | `0x75 0x30` (3V)                          | Value expressed in volt subunits                            |
+| 12-13   | 2    | Voltage High Warning              | `0x88 0xB8` (3.5V)                        | Value expressed in volt subunits                            |
+| 14-15   | 2    | Voltage Low Warning               | `0x79 0x18` (3.1V)                        | Value expressed in volt subunits                            |
+| 16-17   | 2    | Bias High Alarm                   | `0xAF 0xC8` (4.5mA)                       | Value expressed in milliampere subunits                     |
+| 18-19   | 2    | Bias Low Alarm                    | `0x00 0x00` (0mA)                         | Value expressed in milliampere subunits                     |
+| 20-21   | 2    | Bias High Warning                 | `0x88 0xB8` (3.5mA)                       | Value expressed in milliampere subunits                     |
+| 22-23   | 2    | Bias Low Warning                  | `0x00 0x00` (0mA)                         | Value expressed in milliampere subunits                     |
 | 24-25   | 2    | TX Power High Alarm               | `0x7B 0x86` (5dBm)                        | Value expressed in watts subunits                           |
 | 26-27   | 2    | TX Power Low Alarm                | `0x22 0xD0` (-0dBm)                       | Value expressed in watts subunits                           |
 | 28-29   | 2    | TX Power High Warning             | `0x6E 0x17` (4dBm)                        | Value expressed in watts subunits                           |
