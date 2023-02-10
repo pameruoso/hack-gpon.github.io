@@ -327,22 +327,22 @@ The Zyxel PMG3000-D20B stores the content of the emulated EEPROM1 (A2h) in Boot 
 | 2-3     | 2    | Temp Low Alarm                    | `0xCE 0x00` (-50℃)                        | Value expressed in two's complement                         |
 | 4-5     | 2    | Temp High Warning                 | `0x5F 0x00` (95℃)                         | Value expressed in two's complement                         |
 | 6-7     | 2    | Temp Low Warning                  | `0xD8 0x00` (-40℃)                        | Value expressed in two's complement                         |
-| 8-9     | 2    | Voltage High Alarm                | `0x8C 0xA0` (3.6V)                        | Value expressed in volt subunits                            |
-| 10-11   | 2    | Voltage Low Alarm                 | `0x75 0x30` (3V)                          | Value expressed in volt subunits                            |
-| 12-13   | 2    | Voltage High Warning              | `0x88 0xB8` (3.5V)                        | Value expressed in volt subunits                            |
-| 14-15   | 2    | Voltage Low Warning               | `0x79 0x18` (3.1V)                        | Value expressed in volt subunits                            |
-| 16-17   | 2    | Bias High Alarm                   | `0xAF 0xC8` (4.5mA)                       | Value expressed in milliampere subunits                     |
-| 18-19   | 2    | Bias Low Alarm                    | `0x00 0x00` (0mA)                         | Value expressed in milliampere subunits                     |
-| 20-21   | 2    | Bias High Warning                 | `0x88 0xB8` (3.5mA)                       | Value expressed in milliampere subunits                     |
-| 22-23   | 2    | Bias Low Warning                  | `0x00 0x00` (0mA)                         | Value expressed in milliampere subunits                     |
-| 24-25   | 2    | TX Power High Alarm               | `0x7B 0x86` (5dBm)                        | Value expressed in watts subunits                           |
-| 26-27   | 2    | TX Power Low Alarm                | `0x22 0xD0` (-0dBm)                       | Value expressed in watts subunits                           |
-| 28-29   | 2    | TX Power High Warning             | `0x6E 0x17` (4dBm)                        | Value expressed in watts subunits                           |
-| 30-31   | 2    | TX Power Low Warning              | `0x27 0x10` (0dBm)                        | Value expressed in watts subunits                           |
-| 32-33   | 2    | RX Power High Alarm               | `0x07 0xCB` (-7dBm)                       | Value expressed in watts subunits                           |
-| 34-35   | 2    | RX Power Low Alarm                | `0x00 0x0F` (-28dBm)                      | Value expressed in watts subunits                           |
-| 36-37   | 2    | RX Power High Warning             | `0x06 0x30` (-8dBm)                       | Value expressed in watts subunits                           |
-| 38-39   | 2    | RX Power Low Warning              | `0x00 0x14` (-27dBm)                      | Value expressed in watts subunits                           |
+| 8-9     | 2    | Voltage High Alarm                | `0x8C 0xA0` (3.6V)                        | Value expressed in volt subunits[^subunit]                  |
+| 10-11   | 2    | Voltage Low Alarm                 | `0x75 0x30` (3V)                          | Value expressed in volt subunits[^subunit]                  |
+| 12-13   | 2    | Voltage High Warning              | `0x88 0xB8` (3.5V)                        | Value expressed in volt subunits[^subunit]                  |
+| 14-15   | 2    | Voltage Low Warning               | `0x79 0x18` (3.1V)                        | Value expressed in volt subunits[^subunit]                  |
+| 16-17   | 2    | Bias High Alarm                   | `0xAF 0xC8` (4.5mA)                       | Value expressed in milliampere subunits[^subunit]           |
+| 18-19   | 2    | Bias Low Alarm                    | `0x00 0x00` (0mA)                         | Value expressed in milliampere subunits[^subunit]           |
+| 20-21   | 2    | Bias High Warning                 | `0x88 0xB8` (3.5mA)                       | Value expressed in milliampere subunits[^subunit]           |
+| 22-23   | 2    | Bias Low Warning                  | `0x00 0x00` (0mA)                         | Value expressed in milliampere subunits[^subunit]           |
+| 24-25   | 2    | TX Power High Alarm               | `0x7B 0x86` (5dBm)                        | Value expressed in watts subunits[^subunit]                 |
+| 26-27   | 2    | TX Power Low Alarm                | `0x22 0xD0` (-0dBm)                       | Value expressed in watts subunits[^subunit]                 |
+| 28-29   | 2    | TX Power High Warning             | `0x6E 0x17` (4dBm)                        | Value expressed in watts subunits[^subunit]                 |
+| 30-31   | 2    | TX Power Low Warning              | `0x27 0x10` (0dBm)                        | Value expressed in watts subunits[^subunit]                 |
+| 32-33   | 2    | RX Power High Alarm               | `0x07 0xCB` (-7dBm)                       | Value expressed in watts subunits[^subunit]                 |
+| 34-35   | 2    | RX Power Low Alarm                | `0x00 0x0F` (-28dBm)                      | Value expressed in watts subunits[^subunit]                 |
+| 36-37   | 2    | RX Power High Warning             | `0x06 0x30` (-8dBm)                       | Value expressed in watts subunits[^subunit]                 |
+| 38-39   | 2    | RX Power Low Warning              | `0x00 0x14` (-27dBm)                      | Value expressed in watts subunits[^subunit]                 |
 | 40-45   | 6    | MAC address                       | Unique in each SFP                        | Contains the mac address of the SFP, it could also be empty |
 | 46-55   | 10   | Reserved                          | `0x00 0x00 0x00...`                       | Reserved                                                    |
 | 56-59   | 4    | RX_PWR(4) Calibration             | `0x00 0x00 0x00 0x00`                     | 4th order RSSI calibration coefficient                      |
@@ -385,10 +385,17 @@ The Zyxel PMG3000-D20B stores the content of the emulated EEPROM1 (A2h) in Boot 
 | 128-247 | 120  | Reserved                          | `0x00 0x00 0x00...`                       | Reserved                                                    |
 | 248-255 | 8    | Vendor Control                    | `0x00 0x00 0x00 0x00 0x00 0x41 0x41 0x31` | Vendor specific control functions                           |
 
+{% include alert.html content="For more information, see the SFF-8472 Rev 11.0 specification." alert="Info" icon="svg-info" color="blue" %}
+
+
 # Miscellaneous Links
 
 - [alcatel_lucent-lantiq_falcon](https://github.com/minhng99/alcatel_lucent-lantiq_falcon)
 - [uboot lantiq falcon](https://github.com/minhng99/u-boot_lantiq_falcon)
 - [Usage GPON module SFP in Spain](https://forum.mikrotik.com/viewtopic.php?t=116364&start=300)
+
+---
+
+[^subunit]: The subunit are 10000 times smaller than the specified unit
 
 
