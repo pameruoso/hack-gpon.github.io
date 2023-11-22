@@ -237,4 +237,4 @@ Here is a flashable bin file based on OpenWrt v23.05.0 Stable with the mod to sw
 
 <hr>
 
-[^xor]: the Ethernet and SFP WAN ports are in XOR, i.e. either one or the other is usable, not both at the same time.
+[^xor]: the Ethernet and SFP WAN ports are in XOR, i.e. either one or the other is usable, not both at the same time. TEST
