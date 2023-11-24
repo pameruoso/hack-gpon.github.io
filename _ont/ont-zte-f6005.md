@@ -43,25 +43,16 @@ The ONT has a TTL 3.3v UART console (configured as 115200 8-N-1) that can be acc
 - V6.0.10N20 (TIM)
 - V6.0.10P2N02 (OpenFiber)
 - V6.0.10P2N18 (OpenFiber)
+- V6.0.10P2N19 (OpenFiber)
 
-# Usage
-
-{% include_relative ont-nokia-use.md %}
+{% include_relative ont-nokia-use.md disableEnablePassword=true alertUsage="The following commands need to be executed on GponCLI via a terminal (serial, telnet or SSH). The models currently distributed in Italy by TIM and OpenFiber have no way to enter GponCLI via serial, only via telnet after flashing a custom firmware."  %}
 
 {% include_relative ont-nokia-useful-command.md %}
 
-## Enable password
-
-{% include alert.html content="The following enable password is used to enter GponCLI over a serial connection. The models currently distributed in Italy by TIM and OpenFiber have no way to enter GponCLI via serial, only via telnet after flashing a custom firmware. The enable password is not useful for accessing the Web Gui." alert="Note" icon="svg-info" color="blue" %}
-
-You can use this tool to generate the enable password:
-
-{% include cig_password.html username="ont" %}
-
 # Advanced settings
-## Unlock serial and TELNET
+## Unlock serial to flash another firmware
 
-This ONT is the twin brother of [CIG G97-CP](/ont-cig-g-97cp), if you can find its bootloader (named `CIG_bu.en_V3.09.15`), you can easly repack the firmware and enable its serial port. 
+This ONT is the twin brother of [CIG G97-CP](/ont-cig-g-97cp), if you can find its bootloader (named `CIG_bu.en_V3.09.15`), you can easly repack the firmware and enable its serial port limited to bootloader. 
 You need a 3.3V SPI programmer (like a modded CH341a) to read and write back the flash.
 
 {% include alert.html content="This was tested only on a TIM V6.0.10N20 firmware!" alert="Note" icon="svg-info" color="blue" %}
@@ -165,9 +156,13 @@ And flash image with the `upgdimage`.
 
 This way both slots will have the same firmware version and will avoid any swap by the OLT.
 
-After these steps, power-cycle ONT and login via TELNET with `root\admin` credentials. From this moment you can simply spoof your ONT with the usual commands.
+After these steps, power-cycle ONT and login via Telnet with `root\admin` credentials. From this moment you can simply spoof your ONT with the usual commands.
 
 
 # Known Bugs
 
-In versions V6.0.10N14 and V6.0.10P2N02 buffer size is suboptimal: because of this the ONT is unable to work at full speed during uploads if the server is geographically, and/or latency-wise, far. There are no known problems if there is only one person on the GPON tree.
+The buffer size of the hardware is suboptimal: because of this the ONT is unable to work at full speed during uploads if the server is geographically and/or latency-wise far. There are no known problems if there is only one subscriber on the GPON tree. 
+In versions V6.0.10N14 and V6.0.10P2N02 this problem is felt more than with newer firmware as in the new versions (V6.0.10N20, V6.0.10P2N18, V6.0.10P2N19), an attempt is made to avoid buffer filling by means of pause frames. Not all routers support pause frames and some may still suffer from problems with the latest updates.
+
+In version V6.0.10P2N18, problems were found in download speeds with 1 Gbps links.
+
