@@ -21,9 +21,9 @@ parent: HALNy
 | System           | OpenWRT              |
 | HSGMII           | Yes                  |
 | Optics           | SC/APC               |
-| IP address       |                      |
-| Web Gui          |                      |
-| SSH              |                      |
+| IP address       | 192.168.77.154/30    |
+| Web Gui          | none                 |
+| SSH              | port 22666           |
 | Telnet           |                      |
 | Serial           | ✅                   |
 | Serial baud      | 115200               |
@@ -37,7 +37,18 @@ parent: HALNy
 
 - [Zyxel PMG3000-D20B](/ont-zyxel-pmg3000-d20b)
 - [D-LINK DPN-100-Rev-A2](/ont-d-link-dpn-100-rev-a2)
-- [Ziza OP151s](/ont-ziza-op151s)
+- [Zisa OP151s](/ont-zisa-op151s)
 - [T&W TW2362H-CDEL](/ont-t-w-tw2362h-cdel)
+
+## List of partitions
+
+| dev  | size     | erasesize | name          |
+| ---- | -------- | --------- | ------------- |
+| mtd0 | 00040000 | 00010000  | "uboot"       |
+| mtd1 | 00020000 | 00010000  | "uboot_env"   |
+| mtd2 | 003d0000 | 00010000  | "image0"      |
+| mtd3 | 003d0000 | 00010000  | "linux"       |
+| mtd4 | 002a87aa | 00010000  | "rootfs"      |
+| mtd5 | 000a0000 | 00010000  | "rootfs_data" |
 
 

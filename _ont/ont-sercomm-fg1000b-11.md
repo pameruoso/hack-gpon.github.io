@@ -21,7 +21,7 @@ parent: Sercomm
 | Load addr       | 0x80000                |
 | 2.5GBaseT       | Yes                    |
 | PHY Ethernet    | RTL8221B               |
-| Optics          | SC/APC                 |
+| Optics          | LC/APC                 |
 | IP address      | 192.168.100.1/24       |
 | Web Gui         | ✅, no login needed    |
 | SSH             | No                     |
@@ -176,6 +176,13 @@ or
 
 ## Getting/Setting Speed LAN Mode
 
+This has been tested on the Telekom Germany Model of the FG1000B.11 and has brought the desired success of increasing 
+the pre-configured ethernet port speed (1G) to auto-negotiated 2.5G. This does not survive a reboot though.
+
+```
+/bin/ethctl eth0 media-type auto
+```
+
 # GPON/OMCI settings
 
 Part of GPON config is done via the misc configuration loaded as first lib by the smd binary, the config can be seen here:
@@ -326,6 +333,7 @@ It seems `cmld_client get` can't return string values longer than 12 characters,
 
  - 1&1 Glasfaser Modem
  - Telekom Glasfaser Modem 2
+ - Vodafone Glasfaser Modem (FG1000B.VF)
 
 # Credits
 This whole documentation here was made possible thanks to the time invested into reverse engineering by @hwti and the rest of the folks from the forum mentioned in the links section of this page. Thanks a lot!

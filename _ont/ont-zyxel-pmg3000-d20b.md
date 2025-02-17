@@ -23,7 +23,7 @@ parent: Zyxel
 | Optics           | SC/APC                                                     |
 | IP address       | 10.10.1.1                                                  |
 | Web Gui          | ✅ username `admin` or `guest`, password `1234` or `guest` |
-| SSH              | ✅ username `admin`, password `admin`                      |
+| SSH              | ✅ username `admin`, password `admin`. Not available in firmware V1.00(ABVJ.1)b1e |
 | Telnet           |                                                            |
 | Serial           | ✅                                                         |
 | Serial baud      | 115200                                                     |
@@ -49,12 +49,14 @@ The stick has a TTL 3.3v UART console (configured as 115200 8-N-1) that can be a
 
 - [Halny HL-GSFP](/ont-halny-hl-gsfp)
 - [D-LINK DPN-100-Rev-A2](/ont-d-link-dpn-100-rev-a2)
-- [Ziza OP151s](/ont-ziza-op151s)
+- [Zisa OP151s](/ont-zisa-op151s)
 - [T&W TW2362H-CDEL](/ont-t-w-tw2362h-cdel)
 
 ## List of software versions
 - V1.00(ABVJ.0)b3s (2020)
 - V1.00(ABVJ.0)b3i (2020)
+- V1.00(ABVJ.0)b3v
+- V1.00(ABVJ.1)b1e (ca. 2024)
 - V2.50(ABVJ.0)b1b (2022)
 - V2.50(ABVJ.1)b1d (2023)
 
@@ -102,7 +104,7 @@ onu lanpsg 0
 ```
 
 ## Setting Speed LAN Mode
-{% include alert.html content="This command forces the speed to 2.5 and is instantaneous and permanent, use it only if your hardware supports HSGMII and is compatible (not to be used with Broadcom 57810s NIC)" alert="Note" icon="svg-warning" color="red" %}
+{% include alert.html content="This command forces the speed to 2.5 and is instantaneous and permanent, use it only if your hardware supports HSGMII and is compatible (e.g. modified Broadcom 57810s NIC)" alert="Note" icon="svg-warning" color="red" %}
 ```sh
 hal
 set speed 2.5g mode full
@@ -192,7 +194,7 @@ Under certain circumstances, the Web GUI admin credentials might get changed fro
 To restore the default combination try following [this method](https://github.com/xvzf/zyxel-gpon-sfp/issues/6#issuecomment-1065864650).
 
 ## Creating a new rootfs
-The stick has a tricky image packing method, fortunately it has been reverse engineered. A script to help you create a custom rootfs can be found here: [https://github.com/nanomad/zyxel-pmg-3000-mod-kit](https://github.com/nanomad/zyxel-pmg-3000-mod-kit)
+The stick has a tricky image packing method, fortunately it has been reverse engineered. A script to help you create a custom rootfs can be found here: [https://github.com/hack-gpon/zyxel-pmg-3000-mod-kit](https://github.com/hack-gpon/zyxel-pmg-3000-mod-kit)
 
 ## Flashing a new rootfs
 {% include alert.html content="All commands start from the twmanu shell." alert="Note"  icon="svg-info" color="blue" %}
@@ -341,7 +343,7 @@ The Zyxel PMG3000-D20B stores the content of the emulated EEPROM1 (A2h) in `/tmp
 {% include alert.html content="For more information, see the SFF-8472 Rev 11.0 specification." alert="Info" icon="svg-info" color="blue" %}
 
 # Known Bugs
-- [Not working with Broadcom BCM57810S](https://github.com/xvzf/zyxel-gpon-sfp/issues/10)
+- [Works with Broadcom BCM57810S only after solder mod](https://github.com/xvzf/zyxel-gpon-sfp/issues/10)
 - Issue on IPv6 discovery. Not certain whether it is a edge case of a particular ISP or not
 - [Some sticks have a custom password](https://github.com/xvzf/zyxel-gpon-sfp/issues/6)
 - On V2.5 the Lantiq SDK has been updated from 6.4.2 to 7.5.1, breaking upload performance
@@ -349,5 +351,5 @@ The Zyxel PMG3000-D20B stores the content of the emulated EEPROM1 (A2h) in `/tmp
 # Miscellaneous Links
 
 - [Zyxel gpon-sfp](https://github.com/xvzf/zyxel-gpon-sfp)
-- [Zyxel PMG-3000 mod kit](https://github.com/nanomad/zyxel-pmg-3000-mod-kit)
+- [Zyxel PMG-3000 mod kit](https://github.com/hack-gpon/zyxel-pmg-3000-mod-kit)
 - [Rollback SFP Zyxel con il W3 HUB per risolvere il problema dell'upload cappato](https://forum.fibra.click/d/36541-rollback-sfp-zyxel-con-il-w3-hub-per-risolvere-il-problema-dellupload-cappato)

@@ -8,7 +8,7 @@ layout: default
 
 
 <div id="app">
-    <vue-lantiq-eeprom type='eeprom-print'></vue-lantiq-eeprom>
+    <vue-lantiq-eeprom type='eeprom-lantiq'></vue-lantiq-eeprom>
 </div>
 <script src="https://unpkg.com/vue@latest"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue3-sfc-loader"></script>

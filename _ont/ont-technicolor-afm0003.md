@@ -1,8 +1,8 @@
 ---
-title: Technicolor AFM0003
+title: Vantiva AFM0003 (formerly Technicolor AFM0003)
 has_children: false
 layout: default
-parent: Technicolor
+parent: Vantiva (formerly Technicolor)
 alias: HiSense LTE3415-SH+
 ---
 
@@ -10,7 +10,7 @@ alias: HiSense LTE3415-SH+
 
 |                  |                                                 |
 | ---------------- | ----------------------------------------------- |
-| Vendor/Brand     | Technicolor                                     |
+| Vendor/Brand     | Vantiva (formerly Technicolor)                  |
 | Model            | AFM0003TIM                                      |
 | ODM              | HiSense                                         |
 | ODM Product Code | LTE3415-SH+                                     |
@@ -36,7 +36,7 @@ alias: HiSense LTE3415-SH+
 
 The stick has a TTL 3.3v UART console (configured as 115200 8-N-1) that can be accessed from the top surface. To accept TX line commands, the GND of the TTL adapter should be attached to the stick's shield:
 
-{% include image.html file="ont-leox-lxt-010s-h_ttl.jpg" alt="Technicolor AFM0003 TTL Pinout" caption="Technicolor AFM0003 TTL Pinout" %}
+{% include image.html file="ont-leox-lxt-010s-h_ttl.jpg" alt="Vantiva (formerly Technicolor) AFM0003 TTL Pinout" caption="Vantiva (formerly Technicolor) AFM0003 TTL Pinout" %}
 
 {% include alert.html content="Some USB TTL adapters label TX and RX pins the other way around: try to swap them if the connection doesn't work." alert="Note"  icon="svg-warning" color="yellow" %}
 
@@ -116,6 +116,22 @@ The following commands are used to flash a new rootfs to image1 and then boot to
 ```sh
 # flash_eraseall /dev/mtd7
 # cat /tmp/rootfs.new > /dev/mtd7
+```
+
+If you get this error on `cat` command
+```sh
+# cat /tmp/rootfs.new > /dev/mtd7
+cat: write error: Invalid Argument
+```
+
+Use this proceudre instead to write firmware back to mtd:
+```sh
+# flash_eraseall /dev/mtd7
+# cat /tmp/rootfs.new > /dev/mtdblock7
+```
+
+Then make new firmware bootable
+```sh
 # nv setenv sw_version1 NEW_SOFTWARE_VERSION
 # nv setenv sw_commit 1
 # reboot

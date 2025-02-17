@@ -17,7 +17,7 @@ parent: ODI
 | RAM          | 64 MB                             |
 | System       | Linux (Luna SDK 1.9)              |
 | HSGMII       | Yes                               |
-| Optics       | SC/UPC                            |
+| Optics       | SC/UPC or SC/APC                  |
 | IP address   | 192.168.1.1                       |
 | Web Gui      | ✅ user `admin`, password `admin` |
 | SSH          | ✅ user `admin`, password `admin` |
@@ -28,7 +28,7 @@ parent: ODI
 {% include alert.html content="SSH uses an outdated set of algorithms/ciphers, you can connect using the following command:" alert="Note"  icon="svg-info" color="blue" %}
 
 ```shell
-ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -oCiphers=+3des-cbc admin@192.168.1.1
+ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -oCiphers=+3des-cbc -o HostKeyAlgorithms=ssh-rsa admin@192.168.1.1
 ```
 
 {% include image.html file="realtek-dfp-34x-2c2.jpg" alt="ODI Realtek DFP-34X-C2C" caption="ODI Realtek DFP-34X-C2C" %}
@@ -95,6 +95,6 @@ The stick has a TTL 3.3v UART console (configured as 115200 8-N-1) that can be a
 
 - [Hacking RTL960x](https://github.com/Anime4000/RTL960x)
 - [Ditch ONU, use GPON SFP on Business Grade Router, Mikrotik/Ubiquiti/pfSense (Home Networking)](https://forum.lowyat.net/topic/4925452)
-- [For the new model ODI ZTE DFP-34X-C2C](/ont-odi-zte-dfp-34x-2c2)
+- [For the old model ODI ZTE DFP-34G-C2C](/ont-odi-zte-dfp-34g-2c2)
 
 
